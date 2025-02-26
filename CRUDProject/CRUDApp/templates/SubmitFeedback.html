@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block Content %}
+{% load static %}
+
+<style>
+    .gender-box {
+        border: 1px solid #ced4da; /* Bootstrap input border color */
+        border-radius: 5px; /* Rounded corners */
+        padding: 8px 12px; /* Padding for spacing */
+        width: 100%; /* Make it full width */
+        text-align: center; /* Center the text */
+    }
+    .OrganizationExperience{
+        gap:20px;
+    }
+</style>
+
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">{% if feedback %}Edit {% else %}User {% endif %} Feedback Form</h2>
+        <form id="feedbackForm" method="post" enctype="multipart/form-data" onsubmit="return validateForm()">
+            {% csrf_token %}
+
+            <!-- Profile Image & Name Fields Row -->
+            <div class="row align-items-center mb-4">
+                <!-- Profile Image -->
+                <div class="col-md-3 text-center">
+                    <img src="{% if feedback.user_image %}/media/{{ feedback.user_image }}{% else %}{% static 'CRUDApp/Images/Avatar.png' %}{% endif %}" 
+                         alt="{{ feedback.first_name }} {{ feedback.last_name }}" 
+                         class="profile-img rounded-circle border" 
+                         width="150px" height="150px">
+                </div>
+
+                <!-- Name Fields -->
+                <div class="col-md-9">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="first_name" name="first_name"
+                                value="{{ feedback.first_name|default:'' }}" 
+                                placeholder="Enter First Name"
+                                required>
+                            <small class="text-danger" id="firstNameError"></small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="last_name" name="last_name"
+                                value="{{ feedback.last_name|default:'' }}" 
+                                placeholder="Enter Last Name"
+                                required>
+                            <small class="text-danger" id="lastNameError"></small>
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email"
+                                value="{{ feedback.email|default:'' }}" 
+                                placeholder="Enter Email"
+                                required>
+                            <small class="text-danger" id="emailError"></small>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Mobile Number</label>
+                            <input type="tel" class="form-control" id="mobile" name="mobile"
+                                value="{{ feedback.mobile|default:'' }}" 
+                                placeholder="Enter Mobile Number"
+                                required>
+                            <small class="text-danger" id="mobileError"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rest of the Form Fields -->
+            <div class="row mt-5">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-control" id="password" name="password" value="{{ feedback.password|default:'' }}" 
+                    placeholder="{% if feedback.password %}{{ feedback.password }}{% else %}Enter Password{% endif %}" required>
+                    <small class="text-danger" id="passwordError"></small>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input type="password" class="form-control" id="confirmpassword" name="confirmpassword" value="{{ feedback.password|default:'' }}" 
+                    placeholder="{% if feedback.password %}{{ feedback.password }}{% else %}Enter Password{% endif %}" required>
+                    <small class="text-danger" id="passwordError"></small>
+                </div>
+            </div>
+
+                      
+            <div class="row align-items-center text-center mt-3">
+                <!-- Date of Birth -->
+                <div class="col-md-4 d-flex flex-column align-items-center">
+                    <label class="form-label w-100 text-start">Date of Birth</label>
+                    <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" 
+                           value="{{ feedback.date_of_birth|date:'Y-m-d'}}" required>
+                    <small class="text-danger" id="dobError"></small>
+                </div>
+            
+                <!-- Gender Section (Centered) -->
+                <div class="col-md-4 d-flex flex-column align-items-center">
+                    <label class="form-label w-100 text-start">Gender</label>
+                    <div class="gender-box d-flex justify-content-center gap-4">
+                        <div>
+                            <input type="radio" name="genders" value="male" {% if feedback.genders == "male" %}checked{% endif %} required> Male
+                        </div>
+                        <div>
+                            <input type="radio" name="genders" value="female" {% if feedback.genders == "female" %}checked{% endif %}> Female
+                        </div>
+                        <div>
+                            <input type="radio" name="genders" value="other" {% if feedback.genders == "other" %}checked{% endif %}> Other
+                        </div>
+                    </div>
+                    <small class="text-danger" id="genderError"></small>
+                </div>
+            
+                <!-- Select Your Country -->
+                <div class="col-md-4 d-flex flex-column align-items-center">
+                    <label class="form-label w-100 text-start">Select Your Country</label>
+                    <select class="form-select" id="country" name="country" required>
+                        <option value="">Choose...</option>
+                        <option value="India" {% if feedback.country == "India" %}selected{% endif %}>India</option>
+                        <option value="USA" {% if feedback.country == "USA" %}selected{% endif %}>USA</option>
+                        <option value="UK" {% if feedback.country == "UK" %}selected{% endif %}>UK</option>
+                        <option value="Canada" {% if feedback.country == "Canada" %}selected{% endif %}>Canada</option>
+                    </select>
+                    <small class="text-danger" id="countryError"></small>
+                </div>
+            </div>
+            
+
+            <div class="mb-3 mt-4">
+                <label class="form-label">Your Experience with Our Organization</label><br>
+                <div class="d-flex OrganizationExperience">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" id="extremely-happy" value="extremely_happy" {% if feedback.experience == "extremely_happy" %}checked{% endif %} required>
+                        <label class="form-check-label" for="extremely-happy">Extremely Happy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" id="happy" value="happy" {% if feedback.experience == "happy" %}checked{% endif %}>
+                        <label class="form-check-label" for="happy">Happy</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" id="sad" value="sad" {% if feedback.experience == "sad" %}checked{% endif %}>
+                        <label class="form-check-label" for="sad">Sad</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="experience" id="very-sad" value="very_sad" {% if feedback.experience == "very_sad" %}checked{% endif %}>
+                        <label class="form-check-label" for="very-sad">Very Sad</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3 mt-4">
+                <label class="form-label">Your Suggestion</label>
+                <textarea class="form-control" name="suggestion" rows="3" placeholder="Write your suggestion...">{{feedback.suggestion}}</textarea>
+            </div>
+
+            <div class="mb-3 Upload-image d-flex align-items-center mt-4">
+                <input type="file" class="form-control" name="user_image">
+            </div>
+
+
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary w-25">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    function validateForm() {
+        let isValid = true;
+
+        // First Name Validation
+        let firstName = document.getElementById("first_name").value.trim();
+        if (!/^[A-Za-z]{2,}$/.test(firstName)) {
+            document.getElementById("firstNameError").innerText = "Only letters, minimum 2 characters.";
+            isValid = false;
+        } else {
+            document.getElementById("firstNameError").innerText = "";
+        }
+
+        // Last Name Validation
+        let lastName = document.getElementById("last_name").value.trim();
+        if (!/^[A-Za-z]{2,}$/.test(lastName)) {
+            document.getElementById("lastNameError").innerText = "Only letters, minimum 2 characters.";
+            isValid = false;
+        } else {
+            document.getElementById("lastNameError").innerText = "";
+        }
+
+        // Email Validation
+        let email = document.getElementById("email").value;
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            document.getElementById("emailError").innerText = "Invalid email format.";
+            isValid = false;
+        } else {
+            document.getElementById("emailError").innerText = "";
+        }
+
+        // Mobile Number Validation
+        let mobile = document.getElementById("mobile").value;
+        if (!/^\d{10,15}$/.test(mobile)) { 
+            document.getElementById("mobileError").innerText = "Mobile number must be between 10 to 15 digits.";
+            isValid = false;
+        } else {
+            document.getElementById("mobileError").innerText = "";
+        }
+
+        // Password Validation
+        let password = document.getElementById("password").value;
+        if (!/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(password)) {
+            document.getElementById("passwordError").innerText = "Min 6 chars, must include a letter, a number & a special char.";
+            isValid = false;
+        } else {
+            document.getElementById("passwordError").innerText = "";
+        }
+
+        // Date of Birth Validation
+        let dob = document.getElementById("date_of_birth").value;
+        let today = new Date().toISOString().split("T")[0];
+        if (dob > today) {
+            document.getElementById("dobError").innerText = "Date cannot be in the future.";
+            isValid = false;
+        } else {
+            document.getElementById("dobError").innerText = "";
+        }
+
+        // Country Selection Validation
+        if (document.getElementById("country").value === "") {
+            document.getElementById("countryError").innerText = "Please select a country.";
+            isValid = false;
+        } else {
+            document.getElementById("countryError").innerText = "";
+        }
+
+        return isValid;
+    }
+
+    setTimeout(() => {
+        document.querySelector(".exists_message").innerHTML = ""
+    }, 5000);
+</script>
+
+{% endblock Content %}
+
+

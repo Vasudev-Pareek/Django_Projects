@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+h1 {
+    color: #343a40;
+}
+.feedback-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+.feedback-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+    text-align: left;
+}
+.feedback-card:hover {
+    transform: translateY(-5px);
+}
+.profile-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+.username {
+    font-weight: bold;
+    color: #007bff;
+}
+.country {
+    font-style: italic;
+    color: #6c757d;
+    font-size: 10px;
+}
+.message {
+    margin-top: 10px;
+    color: #555;
+}
+.experience {
+    font-weight: bold;
+    margin-top: 10px;
+    color: #28a745;
+}
+.experience-change{
+    color: rgb(77, 81, 83) !important;
+} 
+
+/* .card-buttons{
+    float: right;
+} */
+
+.card-buttons {
+    position: relative; /* Fix buttons inside the card */
+    display: flex;
+    justify-content: flex-end; /* Align to the right */
+    gap: 8px;
+    margin-bottom: 10px; /* Add spacing */
+    opacity: 1 !important; /* Ensure they are always visible */
+    visibility: visible !important; /* Force visibility */
+}
+
+.NameCountry{
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    align-content: center;
+    gap: 10px;
+}
+
+/* delete and Edit Button. */
+.card-buttons {
+    position: relative;
+    /* top: 10px; */
+    right: 10px;
+    display: flex;
+    float: right;
+    gap: 8px;
+}
+
+.edit-btn, .delete-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #212529;  /* Dark background */
+    color: white;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.edit-btn:hover {
+    background: #343a40; /* Slightly lighter dark */
+}
+
+.delete-btn:hover {
+    background: #b02a37; /* Red shade for delete */
+}
+
+/* Icons inside the buttons */
+.edit-btn i, .delete-btn i {
+    font-size: 10px;
+}
+
+
+
+
+/* submit feedback  */
+input:invalid {
+    border: 2px solid red;
+}
+
+input:valid {
+    border: 2px solid green;
+}
+

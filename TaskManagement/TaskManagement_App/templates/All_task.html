@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+{% load static %}
+
+
+<section class="gradient-custom-2 h-auto">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-auto">
+      <div class="col-md-12 col-xl-10">
+
+        <div class="card mask-custom">
+          <div class="card-body p-4 text-dark">
+
+            <div class="text-center pt-3 pb-2">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-todo-list/check1.webp"
+                alt="Check" width="60">
+              <h2 class="my-4">Task List</h2>
+            </div>
+
+            <table class="table text-dark mb-0">
+              <thead>
+                <tr>
+                  <th scope="col">Team Member</th>
+                  <th scope="col">Task</th>
+                  <th scope="col">Priority</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for task in tasks %}
+                <tr class="fw-normal">
+                  <th>
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                      alt="avatar 1" style="width: 45px; height: auto;">
+                      {% if user.first_name and user.last_name %}
+                      <span class="ms-2">{{user.first_name}} {{user.last_name}} (You)</span>
+                      {% else %}
+                    <span class="ms-2">Gust User (You)</span>
+                    {% endif %}
+                  </th>
+                  <td class="align-middle">
+                    <span>{{task.AddTask}}</span>
+                  </td>
+                  <td class="align-middle">
+                    <h6 class="mb-0"><span class="badge bg-danger">High priority</span></h6>
+                  </td>
+                  <td class="align-middle">
+                    <a href="{% url "EditTask" task.id %}" data-mdb-tooltip-init title="Done">
+                        <i class="fas fa-pencil-alt fa-lg me-3 text-success mr-3"></i></a>
+                    <a href="{% url "deleteTask" task.id %}" data-mdb-tooltip-init title="Remove">
+                      <i class="fas fa-trash-alt fa-lg text-warning"></i></a>
+                  </td>
+                </tr>
+                {% endfor %}
+
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% comment %} <h1>Hello, world!</h1>
+<a href="{% url "login" %}">login </a>
+<a href="{% url "register" %}">register </a>
+<a href="{% url "success" %}">success </a> {% endcomment %}
+{% endblock content %}

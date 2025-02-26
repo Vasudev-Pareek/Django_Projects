@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-center mt-5">welcome to our login page</h1>
+
+<div class="container" style="margin-block: 50px;">
+    <form class="w-75 m-auto" method="post">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info ">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+      {% csrf_token %}
+      <div class="mb-3">
+        <label for="username" class="form-label">Enter Your username</label>
+        <input type="text" class="form-control" id="username" name="username">
+      </div>
+        <div class="mb-3">
+          <label for="Password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="Password" name="password">
+        </div>
+        {% comment %} <a href="#" style="float:right;font-size:12px;">Forgot password?</a> {% endcomment %}
+        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        <p>If you Don't have any account? &nbsp <a href="{% url "register" %}" class="mt-5">Sign Up here</a></p>
+        {% comment %} {% if messages %}
+          {% for message in messages %}
+              <p>{{message}}</p>
+          {% endfor %}
+        {% endif %} {% endcomment %}
+      </form>
+  </div> 
+
+{% endblock content %}

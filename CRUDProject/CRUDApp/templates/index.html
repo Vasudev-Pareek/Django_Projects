@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Feedback Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Custom Styling */
+        .hero {
+            height: 100vh; /* Full screen height */
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('https://source.unsplash.com/1600x900/?feedback,office');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Keeps content centered vertically */
+            align-items: center;
+            text-align: center;
+            color: white;
+        }
+        .hero-content {
+            margin-top: -200px; /* Moves content slightly upward */
+        }
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        .btn-custom {
+            margin: 10px;
+            font-size: 1.1rem;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-content">
+        <h1>Welcome to Our Feedback Portal</h1>
+        <p>Your opinion matters! Share your feedback and explore others' experiences.</p>
+        
+        <div>
+            <a href="/" class="btn btn-primary btn-custom">Home</a>
+            <a href="{% url 'SubmitFeedback' %}" class="btn btn-success btn-custom">Submit Feedback</a>
+            <a href="{% url 'FeedbackGallery' %}" class="btn btn-warning btn-custom">View Feedbacks</a>
+            <a href="https://nilehospitality.com/" class="btn btn-info btn-custom">Visit Our Website</a>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

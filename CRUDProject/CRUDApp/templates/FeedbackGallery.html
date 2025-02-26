@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block Content %}
+{% load static %}
+<link rel="stylesheet" href={% static "CRUDApp/CSS/FeedbackGallery.css" %}>
+
+<div class="container">
+    <h1>Feedback Gallery</h1>
+    <div class="feedback-grid">
+        {% for Feedback in Feedbacks %}
+            <div class="feedback-card">
+                {% comment %} <div class="card-buttons">
+                    <a href="#" class="edit-btn">✏️</a>
+                    <a href="#" class="delete-btn" onclick="return confirm('Are you sure you want to delete this feedback?');">❌</a>
+                </div>  {% endcomment %}
+                <div class="card-buttons">
+                    <a href="{% url "SubmitFeedback" Feedback.id %}" class="edit-btn">
+                        <i class="fas fa-edit"></i> 
+                    </a>
+                    <a href="{% url "delete_feedback" Feedback.id %}" class="delete-btn" onclick="return confirm('Are you sure you want to delete this feedback?');">
+                        <i class="fas fa-trash"></i> 
+                    </a>
+                </div> 
+                
+                <img src="{% if Feedback.user_image %}/media/{{ Feedback.user_image }}{% else %}{% static 'CRUDApp/Images/Avatar.png' %}{% endif %}" alt="{{ Feedback.first_name }} {{ Feedback.last_name }}" class="profile-img">
+                <div class="NameCountry">
+                    <p class="username">{{Feedback.first_name}} {{Feedback.last_name}}</p>
+                    <p class="country">{{Feedback.country}}</p>
+                </div>
+                <p class="message">{{Feedback.suggestion}}</p>
+                <p class="experience">Experience: <span class="experience-change">{{Feedback.experience}}</span></p>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock Content %} 

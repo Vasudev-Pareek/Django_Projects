@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@azure/storage-blob": "^12.26.0",
+    "azure-identity": "^0.0.1-security"
+  }
+}

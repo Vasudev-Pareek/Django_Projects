@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="text-center mt-5">Welcome To Our Register Page</h1>
+<div class="container" style="margin-block: 50px;">
+    <form class="w-75 m-auto" method="post">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+      {% csrf_token %}
+      <div class="mb-3 d-flex justify-content-between">
+        <div class="mb-3" style="width: 48%;">
+          <label for="firstname" class="form-label">Enter Your First Name</label>
+          <input type="text" class="form-control" id="firstname" name="firstname">
+        </div>
+        <div class="mb-3" style="width: 48%;">
+          <label for="lastname" class="form-label">Enter Your last Name</label>
+          <input type="text" class="form-control" id="lastname" name="lastname">
+        </div>
+      </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Enter Your username</label>
+          <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="mb-3">
+          <label for="useremail" class="form-label">Enter Your Email</label>
+          <input type="text" class="form-control" id="useremail" name="email">
+        </div>
+        <div class="mb-3">
+          <label for="Password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="Password" name="password">
+        </div>
+        {% comment %} <div class="mb-3">
+          <label for="ConfirmPassword" class="form-label">Confirm Password</label>
+          <input type="password" class="form-control" id="ConfirmPassword" name="ConfirmPassword">
+        </div> {% endcomment %}
+        <button type="submit" class="btn btn-primary mb-4">Submit</button>
+        <p>If you already have any account? &nbsp <a href="{% url "login" %}" class="mt-5">Sign In here</a></p>
+        {% comment %} {% if messages %}
+          {% for message in messages %}
+          <p>{{message}}</p>
+          {% endfor %}
+        {% endif %} {% endcomment %}
+      </form>
+  </div> 
+
+{% endblock content %}

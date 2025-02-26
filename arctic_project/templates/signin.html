@@ -1,0 +1,45 @@
+{% extends "base.html" %}	
+{% load static %}
+{% block login %}
+
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Wecome To Our website</p>
+						<h1>User Login</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+<div class="container" style="margin-block: 100px;">
+  <form class="w-75 m-auto" method="post">
+	{% csrf_token %}
+      <div class="mb-3">
+		<input type="hidden" name="next" value="{{ next }}">
+      </div>
+      <div class="mb-3">
+        <label for="useremail" class="form-label">Enter Your Email</label>
+        <input type="text" class="form-control" id="useremail" name="useremail">
+      </div>
+      <div class="mb-3">
+        <label for="Password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="Password" name="Password">
+      </div>
+      <button type="submit" class="btn btn-primary mb-3">Submit</button>
+	  <p>If you Don't have any account? &nbsp <a href="{% url "signup" %}" class="mt-5">Sign Up here</a></p>
+	  {% if messages %}
+		{% for message in messages %}
+			<p>{{message}}</p>
+		{% endfor %}
+	  {% endif %}
+    </form>
+</div> 
+
+
+{% endblock login %}

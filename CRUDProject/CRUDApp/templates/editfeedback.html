@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% block Content %}
+{% load static %}
+
+<!-- Form Section -->
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h2 class="text-center mb-4">Edit Feedback Form</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">First Name</label>
+                    <input type="text" value="{{feedback.first_name}}" class="form-control" placeholder="Enter First Name" name="first_name" required >
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Last Name</label>
+                    <input type="text" value="{{feedback.last_name}}" class="form-control" placeholder="Enter Last Name" name="last_name" required>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" value="{{feedback.email}}" class="form-control" placeholder="Enter Email" name="email" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Mobile Number</label>
+                <input type="tel" value="{{feedback.mobile}}" class="form-control" placeholder="Enter Mobile Number" name="mobile" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" value="{{feedback.password}}" class="form-control" placeholder="Enter Password" name="password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Date of Birth</label>
+                <input type="date" value="{{ feedback.date_of_birth|date:'Y-m-d' }}" class="form-control" name="date_of_birth" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Gender</label><br>
+                <input type="radio" id="male" name="genders" value="male" {% if feedback.genders == "male" %}checked{% endif %} required>
+                <label for="male">Male</label>
+            
+                <input type="radio" id="female" name="genders" value="female" {% if feedback.genders == "female" %}checked{% endif %}>
+                <label for="female">Female</label>
+            
+                <input type="radio" id="other" name="genders" value="other" {% if feedback.genders == "other" %}checked{% endif %}>
+                <label for="other">Other</label>
+            </div>
+            
+
+            <div class="mb-3">
+                <label class="form-label">Your Experience with Our Organization</label><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="experience" id="extremely-happy" value="extremely_happy" {% if feedback.experience == "extremely_happy" %}checked{% endif %} required>
+                    <label class="form-check-label" for="extremely-happy">Extremely Happy</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="experience" id="happy" value="happy" {% if feedback.experience == "happy" %}checked{% endif %}>
+                    <label class="form-check-label" for="happy">Happy</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="experience" id="sad" value="sad" {% if feedback.experience == "sad" %}checked{% endif %}>
+                    <label class="form-check-label" for="sad">Sad</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="experience" id="very-sad" value="very_sad" {% if feedback.experience == "very_sad" %}checked{% endif %}>
+                    <label class="form-check-label" for="very-sad">Very Sad</label>
+                </div>
+            </div>
+            
+
+            <div class="mb-3">
+                <label class="form-label">Your Suggestion</label>
+                <textarea class="form-control" rows="3" placeholder="Write your suggestion..." name="suggestion">{{feedback.suggestion}}</textarea>
+            </div>
+
+            {% comment %} <div class="mb-3 Upload-image">
+                {% if feedback.user_image %}
+                    <img src="{{ feedback.user_image.url }}" alt="Uploaded Image" class="img-thumbnail mb-2" width="150">
+                {% endif %}
+                    <input type="file" class="form-control" name="user_image">
+            </div> {% endcomment %}
+
+            <div class="mb-3 Upload-image d-flex align-items-center">
+                {% if feedback.user_image %}
+                    <img src="{{ feedback.user_image.url }}" alt="Uploaded Image" class="img-thumbnail me-2" width="150">
+                {% endif %}
+                <input type="file" class="form-control" name="user_image">
+            </div>
+            
+
+            <div class="mb-3">
+                <label class="form-label">Select Your Country</label>
+                <select class="form-select" name="country" required>
+                    <option selected disabled>Choose...</option>
+                    <option value="India" {% if feedback.country == "India" %}selected{% endif %}>India</option>
+                    <option value="USA" {% if feedback.country == "USA" %}selected{% endif %}>USA</option>
+                    <option value="UK" {% if feedback.country == "UK" %}selected{% endif %}>UK</option>
+                    <option value="Canada" {% if feedback.country == "Canada" %}selected{% endif %}>Canada</option>
+                </select>
+            </div>
+            
+
+            <button type="submit" class="btn btn-primary w-100">Update</button>
+        </form>
+    </div>
+</div>
+
+{% endblock Content %}

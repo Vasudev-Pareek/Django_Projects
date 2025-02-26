@@ -1,0 +1,138 @@
+{% extends "my_store_app/main.html" %}
+{% load static %}
+{% block HeroSection %}
+        <!-- Hero Section -->
+        <section id="hero" style="background-image: url('{% static "images/hero4.png" %}');">
+            <h4>Trade-in-offer</h4>
+            <h2>Super value deals</h2>
+            <h1>On all products</h1>
+            <p>Save more with cuppons & up to 70% off!</p>
+            <button style="background-image: url('{% static "images/button.png" %}');">Shop now</button>
+        </section>
+{% endblock HeroSection %}
+
+{% block FeatureBanner %}
+<section id="feature" class="section-p1" > 
+    <div class="fe-box">
+        <img src="{% static 'images/features/f1.png' %}" alt="">
+        <h6>Free Shipping</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'images/features/f2.png' %}" alt="">
+        <h6>Online Order</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'images/features/f3.png' %}" alt="">
+        <h6>Save Money</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'images/features/f4.png' %}" alt="">
+        <h6>Promotions</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'images/features/f5.png' %}" alt="">
+        <h6>Happy Sell</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'images/features/f6.png' %}" alt="">
+        <h6>F24/7 Support</h6>
+    </div>
+</section>
+{% endblock FeatureBanner %}
+
+{% block content %}
+<section id="product1" class="section-p1">
+    <h2>Featured Products</h2>
+    <p>Summer Collection New Morden Design</p>
+    <div class="pro-container">
+        {% for product in products %}
+        <a href="{% url 'product_detail' product.id %}">
+            <div class="pro">
+                <img src="{{ product.imageURL }}" alt="">
+                <div class="des">
+                    <h5>{{ product.name }}</h5>
+                    <div class="star">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h4>${{product.price|floatformat:2}}</h4>
+                </div>
+                <a data-product={{product.id}} data-action="add" class="add-btn update-cart"><i class="fa-solid fa-cart-shopping cart"></i></a>
+            </div>
+        </a>
+        {% endfor %}
+    </div>
+</section>  
+{% endblock content %}
+
+{% block Banner %}
+<section id="banner" class="section-m1" style="background-image: url('{% static "images/banner/banner2.jpg" %}');">
+    <h4>Repair Services</h4>
+    <h2>Up to <span>70% off</span> - All t-shirts & Accessories</h2>
+    <button class="normal">Explore More</button>
+</section>
+{% endblock Banner %}
+
+{% block DealsAndSale %}
+    <!-- Small Banners  Banner2-->
+    <section id="sm-banner" class="section-p1">
+        <div class="banner-box" style="background-image: url('{% static "images/banner/b17.jpg" %}');">
+            <h4>Creazy deals</h4 >
+            <h2>buy 1 get 1 free</h2>
+            <span>The best classic dress is on sale at cara</span>
+            <button class="white">Learn More</button>
+        </div>
+        <div class="banner-box banner-box2" style="background-image: url('{% static "images/banner/b10.jpg" %}');">
+            <h4>spring/summer</h4>
+            <h2>Upcoming season</h2>
+            <span>The best classic dress is on sale at cara</span>
+            <button class="white">Collection</button>
+        </div>
+    </section>
+
+    <!-- Small Banners3 -->
+    <section id="banner3" class="section-p1">
+        <div class="banner-box" style="background-image: url('{% static "images/banner/b7.jpg" %}');">
+            <h2>SEASONAL SALE</h2>
+            <h3>Winter Collecton -50% OFF</h3>
+        </div>
+        <div class="banner-box banner-box2" style="background-image: url('{% static "images/banner/b4.jpg" %}');">
+            <h2>NEW FOOTWEAR COLLECTION</h2>
+            <h3>Spring/Summer 2022</h3>
+        </div>
+        <div class="banner-box banner-box3" style="background-image: url('{% static "images/banner/b18.jpg" %}');">
+            <h2>T-SHIRTS</h2>
+            <h3>New Trendy Prints</h3>
+        </div>
+    </section>
+{% endblock DealsAndSale %}
+
+
+
+
+
+
+
+{% comment %} {% extends "my_store_app/main.html" %}
+{% load static %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            {% for product in products %}
+            <div class="col-lg-4">
+                <img class="thumbnail" src="{{product.imageURL}}">
+                <div class="box-element product">
+                    <h6><strong>{{ product.name }}</strong></h6>
+                    <hr>
+                    <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+                    <a class="btn btn-outline-success" href="#">View</a>
+                    <h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %} {% endcomment %}

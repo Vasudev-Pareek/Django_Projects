@@ -1,0 +1,103 @@
+{% extends "base.html" %}	
+{% load static %}
+{% block News %}
+	
+	<!-- breadcrumb-section -->
+	<div class="breadcrumb-section breadcrumb-bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="breadcrumb-text">
+						<p>Organic Information</p>
+						<h1>News Article</h1>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end breadcrumb section -->
+
+	<!-- latest news -->
+	<div class="latest-news mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				{% for item in news %}
+				<div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="{% url 'singleNews' item.id %}"><img src={{item.newsImg.url}} alt=""></a>
+						
+						<div class="news-text-box">
+							<h3><a href="{% url 'singleNews' item.id %}">{{ item.newsTittle }}</a></h3> {% comment %} by chatgpt {% endcomment %}
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> {{item.newsDate}}</span>
+							</p>
+							<p class="excerpt">
+							{% if request.resolver_match.url_name == 'singleNews' %}
+								{{news_item.newsDescription}}
+							{% else %}
+								{{ news_item.newsDescription|slice:":20" }}...
+							{% endif %}
+							</p>
+							<a href="{% url 'singleNews' item.id %}" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				{% comment %} <div class="col-lg-4 col-md-6">
+					<div class="single-latest-news">
+						<a href="single-news.html"><div class="latest-news-bg news-bg-6"></div></a>
+						<div class="news-text-box">
+							<h3><a href="single-news.html">Love for fruits are genuine of John Doe</a></h3>
+							<p class="blog-meta">
+								<span class="author"><i class="fas fa-user"></i> Admin</span>
+								<span class="date"><i class="fas fa-calendar"></i> 27 December, 2018</span>
+							</p>
+							<p class="excerpt">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus laborum autem, dolores inventore, beatae nam.</p>
+							<a href="single-news.html" class="read-more-btn">read more <i class="fas fa-angle-right"></i></a>
+						</div>
+					</div>
+				</div> {% endcomment %}
+			</div>
+
+			<div class="row">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 text-center">
+							<div class="pagination-wrap">
+								<ul>
+									<li><a href="#">Prev</a></li>
+									<li><a href="#">1</a></li>
+									<li><a class="active" href="#">2</a></li>
+									<li><a href="#">3</a></li>
+									<li><a href="#">Next</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end latest news -->
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						{% for logo in companylogos %}
+						<div class="single-logo-item">
+							<img src="{{logo.company_logo.url}}" alt="Company Logo">
+						</div>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+
+
+{% endblock News %}
